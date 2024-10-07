@@ -53,12 +53,14 @@ def progress(current, total, message, type):
     with open(f'{message.id}{type}status.txt', "w") as fileup:
         fileup.write(f"{current * 100 / total:.1f}%")
 
-# start command
 @bot.on_message(filters.command(["start"]))
-def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**, **𝙸 𝚊𝚖 𝚂𝚊𝚟𝚎 𝚁𝚎𝚜𝚝𝚛𝚒𝚌𝚝𝚎𝚍 𝙱𝚘𝚝 𝙱𝚘𝚝 𝙸 𝚌𝚊𝚗 𝚢𝚘𝚞 𝚛𝚎𝚜𝚝𝚛𝚒𝚌𝚝𝚎𝚍 𝚌𝚘𝚗𝚝𝚎𝚗𝚝 𝚋𝚢 𝚙𝚘𝚜𝚝 𝚕𝚒𝚗𝚔\n🫡 🚫 🛡️ 🛡️ :: 𝙽𝚘 𝚙𝚘𝚛𝚗 𝚌𝚘𝚗𝚝𝚎𝚗𝚝 𝚢𝚘𝚞 𝚠𝚒𝚕𝚕 𝚐𝚎𝚝 𝚋𝚊𝚗 \n 𝚌𝚊𝚗 𝚜𝚊𝚟𝚎 𝙾𝚗 𝚕 𝚢 𝚏𝚛𝚘𝚖 𝚙𝚞𝚙𝚕𝚒𝚌 𝚊𝚗𝚍 𝚊𝚗𝚍 𝚌𝚑𝚊𝚗𝚗𝚎𝚕 𝚌𝚑𝚊𝚗𝚗𝚎𝚕 \n🛡️𝚃𝚑𝚊𝚗𝚔𝚜 𝙵𝚘𝚛 𝚄𝚜𝚒𝚗𝚐 𝚖𝚎 ❤️__**\n\n{USAGE}",
-    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🌐 𝙳𝚎𝚟𝚎𝚕𝚘𝚙𝚎𝚛 ", url="https://t.me/X_XF8")]]), reply_to_message_id=message.id)
-
+async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    await client.send_message(
+        message.chat.id,
+        f"**__👋 Hi** **{message.from_user.mention}**, **I am Save Restricted Bot, I can send you public restricted content by post link note : only public__**\n\n{USAGE}",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🌐 𝙳𝚎𝚟𝚎𝚕𝚘𝚙𝚎𝚛 ", url="https://t.me/X_XF8")]]),
+        reply_to_message_id=message.id
+    )
 @bot.on_message(filters.text)
 def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     print(message.text)
