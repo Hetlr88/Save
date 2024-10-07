@@ -18,6 +18,11 @@ bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
             
 
+def get_bot_link_button():
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("🔗Advance Content Saver Bot ❤️ - بوت حفظ المحتوي المقيد 💾", url="https://t.me/Saveredicatbot")]]
+    )
+
 # download status
 async def downstatus(statusfile, message):
     while True:
@@ -131,7 +136,7 @@ async def handle_private(message, chatid, msgid):
     msg_type = get_message_type(msg)
 
     if msg_type == "Text":
-        await bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
+        await bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button())
         return
 
     smsg = await bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
@@ -148,7 +153,7 @@ async def handle_private(message, chatid, msgid):
             thumb = await bot.download_media(msg.document.thumbs[0].file_id)
         except:
             thumb = None
-        await bot.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
+        await bot.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button(), progress=progress, progress_args=[message, "up"])
         if thumb:
             os.remove(thumb)
 
@@ -157,30 +162,30 @@ async def handle_private(message, chatid, msgid):
             thumb = await bot.download_media(msg.video.thumbs[0].file_id)
         except:
             thumb = None
-        await bot.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
+        await bot.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button(), progress=progress, progress_args=[message, "up"])
         if thumb:
             os.remove(thumb)
 
     elif msg_type == "Animation":
-        await bot.send_animation(message.chat.id, file, reply_to_message_id=message.id)
+        await bot.send_animation(message.chat.id, file, reply_to_message_id=message.id, reply_markup=get_bot_link_button())
 
     elif msg_type == "Sticker":
-        await bot.send_sticker(message.chat.id, file, reply_to_message_id=message.id)
+        await bot.send_sticker(message.chat.id, file, reply_to_message_id=message.id, reply_markup=get_bot_link_button())
 
     elif msg_type == "Voice":
-        await bot.send_voice(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
+        await bot.send_voice(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button(), progress=progress, progress_args=[message, "up"])
 
     elif msg_type == "Audio":
         try:
             thumb = await bot.download_media(msg.audio.thumbs[0].file_id)
         except:
             thumb = None
-        await bot.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
+        await bot.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button(), progress=progress, progress_args=[message, "up"])
         if thumb:
             os.remove(thumb)
 
     elif msg_type == "Photo":
-        await bot.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id)
+        await bot.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, reply_markup=get_bot_link_button())
 
     os.remove(file)
     if os.path.exists(f'{message.id}upstatus.txt'):
@@ -254,3 +259,5 @@ USAGE = """
 
 # infinty polling
 bot.run()       
+
+# Add this function to generate the keyboard with the bot link
